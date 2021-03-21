@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://cdn.bootcss.com/jquery/1.8.3/jquery.js"></script>
+    <title>Document</title>
+    <link rel="stylesheet"  href="./html.css">
+</head>
+<script>
+    var flag = 0;
+    var current = 0;
+    var musics_left = ["./music/聊.mp3","./music/难得一遇.mp3","./music/唯独你是不可取替.mp3","./music/一想到你.mp3",
+                        "./music/糖不甩.mp3","./music/与我常在.mp3","./music/完.mp3","./music/有泪多好.mp3",
+                        "./music/还记得.mp3","./music/这么近那么远.mp3","./music/告别我.mp3","./music/最佳位置.mp3"];
+    var musics_right = ["./music/美丽之最.mp3","./music/难得一遇.mp3","./music/交换温柔.mp3","./music/花火.mp3",
+                        "./music/梦中人.mp3","./music/只要和你在一起.mp3","./music/信口开河.mp3","./music/七百年后.mp3",
+                        "./music/爱与妒忌.mp3","./music/雨过天阴.mp3","./music/投降吧.mp3","./music/当我想起你.mp3"];
+
+    var images_left = ["./image/聊.JPG","./image/难得一遇.JPG","./image/唯独你是不可取替.JPG","./image/一想到你.JPG",
+                        "./image/糖不甩.JPG","./image/与我常在.JPG","./image/完.JPG","./image/有泪多好.JPG",
+                        "./image/还记得.JPG","./image/这么近那么远.JPG","./image/告别我.JPG","./image/最佳位置.JPG"];
+    var images_right = ["./image/美丽之最.JPG","./image/难得一遇.JPG","./image/交换温柔.JPG","./image/花火.JPG",
+                        "./image/梦中人.JPG","./image/只要和你在一起.jpg","./image/信口开河.JPG","./image/七百年后.JPG",
+                        "./image/爱与妒忌.JPG","./image/雨过天阴.JPG","./image/投降吧.JPG","./image/当我想起你.JPG"];
+
+    var background_color = ["#4a47a3","#ff9595","#158467","#145374","#ee6f57","#008891",
+                            "#394867","#393e46","#f69e7b","#197163","#709fb0","#48426d"];
+    
+    var number = ["./image/1.png","./image/2.png","./image/3.png","./image/4.png","./image/5.png","./image/6.png",
+                "./image/7.png","./image/8.png","./image/9.png","./image/10.png","./image/11.png","./image/12.png"]
+
+    var name_left = ["聊","难得一遇","唯独你是不可取替","一想到你","糖不甩","与我常在","完","有泪多好",
+                        "还记得","这么近那么远","告别我","最佳位置"];
+    var name_right = ["美丽之最","难得一遇","交换温柔","花火","梦中人","只要和你在一起","信口开河","七百年后",
+                        "爱与妒忌","雨过天阴","投降吧","当我想起你"];
+
+    var lyric_left = ["我给你流泪笑脸<br/>我给你老歌词<br/>我给你全部汉字<br/>都怕少<br/>我跟你聊着世事<br/>我跟你聊心事<br/>我跟你聊动<br/>宇宙聊动你<br/><br/><br/>",
+                        "如天注定我们 走到尽头<br/>用力撞坏那天门 亲手自救<br/>难得这段爱情 能捱这么久<br/>如何会放得低你<br/>要认命 太荒谬<br/>明明就是我的人 守到白头<br/>为着你我只怕捐躯都不够<br/>穷一生之力 凭一句诺言<br/>必须挽着手<br/><br/>",
+                        "如果今天将失去<br/>眼前的一切<br/>剩低清风两袖也不计<br/>唯独你一个是不可给取替<br/>是我生命里的一切<br/>如早知今生跟你<br/>有幸可相爱<br/>在当初应更努力为未来<br/>其实我知道是可一不可再<br/>下半生准我留住你一直相爱",
+                        "人情破碎之离<br/>然而你不止爱自己<br/>无论世间光怪与陆离<br/>始终你和平静气<br/>传达每分体贴细微<br/>燃亮了惊喜<br/>回头你我分离<br/>原来生死间必须舍弃<br/>留下只得一次次想起<br/>心愿再也不可预期<br/>延续我只可事事学你",
+                        "缘易变<br/>糖不甩<br/>谁又认真的爱人<br/>林在山<br/>甜在心<br/>要像鸳鸯戏水的陪衬<br/>我会给<br/>红豆吻<br/>你耍双节棍<br/><br/>",
+                        "在一起看每出戏 在一起叹每口气<br/>再细常 同偕到老的况味<br/>每分钟也抱紧你 没有一秒共你别离<br/>还携手看着生与死<br/>坐着卧着都分享 日日夜夜也为彼此设想<br/>站着望着都分享 就在梦内发掘这真相<br/><br/><br/>",
+                        "从来从来病床一张<br/>就算已躺上 点滴再响<br/>但意志高涨 虽已走向<br/>那灭亡最终一章 全力多打漂亮一仗<br/>仍期望那重伤 或会有转向<br/>这是妄想 怎也说不上<br/>无力软弱 总不免变得倔强<br/>无奈身于死角 只得一个下场",
+                        "原来我眼睛需要倾出泪<br/>提示我人生高低起跌看得开<br/>便豁出去<br/>抬头有曙光所以珍惜泪<br/>陪伴我迎接美丑哭笑冷暖兴衰<br/>而存在多飘渺多得眼泪伴随<br/>寻回忆的证据<br/><br/><br/><br/>",
+                        "何解<br/>何解初初都是漂亮<br/>何解初初双眼善良<br/>岁月太长<br/>会令你忘记了伴侣差一句赞赏<br/>如果<br/>如果今天关系变样<br/>如果今天起了石墙<br/>过份正常<br/>会令爱情缺氧未会珍惜那会着想",
+                        "我 留着你在身边 心仍然很远<br/>也许终于都有天 当你站在前面<br/>但我分不出这张是谁的脸<br/>我 留着你在身边 心仍然很远<br/>我想伸手拉近点 竟触不到那边<br/>就欠一点点 但这一点点 却很远<br/><br/>",
+                        "不想讲你知　曾用十万字　段段布满<br/>爱句子　写出千语万言　有多少次<br/>只想讲你知　难平静入睡　外面有雨<br/>你那边　何妨同样细听　旋律意思<br/>如心　微晃　惦念气候这份暖和<br/>留低　余芳　像有些发生过<br/>没法去讲　只需要略记起我<br/><br/><br/>",
+                        "无论你喜欢谁<br/>请你记住留下给我这位置<br/>时常在内心一隅<br/>空出几寸为我坚持<br/>共度半生 亦有张椅子<br/>是否爱还是其次<br/>只想你依然 亦想得起我不是<br/>任你处置<br/><br/><br/><br/>"
+                    ];
+    var lyric_right = ["想一生看下去<br/>还会等一天八十岁<br/>看你发端灰色的点缀<br/>未来只有乐趣<br/>和你去拖手看新居<br/>双眼开始像饮醉<br/>尤如观星你在这里<br/>我的双眼里<br/>寻找到宇宙之最<br/>",
+                        "当你从来没怨<br/>能捱这么久<br/>如何会放得低你<br/>你现在太屈就<br/>明晨就是我的人 守到白头<br/>为着你我所有艰苦都接受<br/>穷一生之力 凭一句诺言<br/>必须挽着手<br/>终生不渝 天塌下来<br/>只须挽着手",
+                        "能共你活着别分手<br/>怎可当世界没<br/>宁愿任细水再长流<br/>才怀念最欢乐时候<br/>能为你活着别分手<br/>请感激你我还能够<br/>站在暴雨中漫游<br/>为何还吝啬所有<br/>将温柔捐给你都怕未够",
+                        "来吧伴我飞<br/>不休不睡去飞<br/>来尽力忘记<br/>两脚降落何地<br/>若记忆凭据<br/>到某一天告吹<br/>回望即使太蠢<br/>都相信我做得对<br/><br/><br/>",
+                        "梦中人 一分钟抱紧<br/>接十分钟的吻<br/>陌生人 怎么走进内心<br/>制造这次兴奋<br/>我仿似跟你热恋过<br/>和你未似现在这样近<br/>思想开始过分<br/>为何突然袭击我<br/>来进入我闷透梦窝<br/>激起一股震撼",
+                        "沿途几多障碍 埋头撞向未来<br/>闭上呼吸跟你堕进深海<br/>历劫都不能离开 人生有太多意外<br/>攀不过断崖 如何相爱<br/>旁人怎么对待 仍然撞向未来<br/>决意今生跟你被爱淹盖<br/>若世界不容人 不失气概<br/>进或退 我们都不践踏爱",
+                        "没上心答应你的这样多<br/>可惜我说过太多的如果<br/>推说还有时间<br/>来过几千次无成果<br/>直到你死心才自责<br/>要努力做人很错<br/>目睹冷漠的表情<br/>惩罚到信口开河的我",
+                        "送你破黑胶 廉价发出歌声依稀<br/>送你破灯泡 便宜地照亮你天地<br/>一箱卡式带一直没落仍能回味 那套旧文艺戏<br/>生生不息的凄美爱情逾越物质跨过世纪<br/>文明能压碎 情怀不衰 无论枯干山水<br/>旧时年月投入垃圾里 你我一起同居<br/>仍然能送你 儿时玩具<br/>老地方抱着一起安睡<br/>七百年 潮流里 瞬息过去",
+                        "疑惧的心因你起 因我极爱你<br/>其实太想捉紧你 所以会妒忌<br/>蝴蝶永远要飞 一刻找不到你<br/>我都担心爱情已枯死<br/>无事生非悲与喜 都也为了你<br/>难独占身边的你 所以会妒忌<br/>情敌永远太多 统统过份妩媚<br/>我怎假装豁达也生气<br/><br/>",
+                        "大雨洒过后晴天<br/>是老生空话志在哄骗<br/>从上次吵架后不瞅不睬不见<br/>彼此关系急促搁浅<br/>若那天故事重演<br/>让恼火依稀沉淀<br/>共你也许有幸较早以前<br/>已组织婚礼盛宴",
+                        "共我度假 为何这样难<br/>从前是我没有时间<br/>但今天竟说麻烦<br/>别要害怕 望我的双眼<br/>谁人在那日约会你 能说吗<br/>并没太多 过问的资格<br/>已沉沦到 见面亦难<br/>亦没信心 去面对你的想法<br/>情形坏到 迟钝似我 都明白",
+                        "过去的经已不会再出现<br/>过去的一切只会更加遥远<br/>明白到各有各的去路<br/>但我心中始终感到<br/>能共你爱过<br/>暖暖的令我自豪<br/>曾在我心如此深深爱恋中<br/>遗下忆记在脑中<br/>从当天起永都不可忘记<br/>当我想<br/>想起你<br/>仍像昨天一般深爱你"
+                    ]
+
+    function changePage(musicLeft, musicRight, imageLeft, imageRight, nameLeft, nameRight, lyricLeft, lyricRight, number, bg_color){
+        var musicL = document.getElementById("musicL");
+        var musicR = document.getElementById("musicR");
+        var controlL = document.getElementById("controlL");
+        var controlR = document.getElementById("controlR");
+        if(!musicL.paused){
+            musicL.pause();
+            controlL.src = "./image/play.png";
+        }
+        if(!musicR.paused){
+            musicR.pause();
+            controlR.src = "./image/play.png";
+        }
+        var bg = document.getElementById("bg");
+        bg.style.backgroundColor = bg_color;
+        var num = document.getElementById("number");
+        num.src = number;
+        var imageL = document.getElementById("imageL");
+        imageL.src = imageLeft;
+        var musicL = document.getElementById("musicL");
+        musicL.src = musicLeft;
+        var imageR = document.getElementById("imageR");
+        imageR.src = imageRight;
+        var musicR = document.getElementById("musicR");
+        musicR.src = musicRight;
+        var nameL = document.getElementById("nameL");
+        nameL.innerText = nameLeft;
+        var nameR = document.getElementById("nameR");
+        nameR.innerText = nameRight;
+        var lyricL = document.getElementById("lyricL");
+        lyricL.innerHTML = lyricLeft;
+        var lyricR = document.getElementById("lyricR");
+        lyricR.innerHTML = lyricRight;
+    }
+
+    document.onkeydown = function(e){
+        if(e.key == "ArrowDown"){
+            if(current < 11){
+                current ++;
+            }
+            changePage(musics_left[current],musics_right[current],images_left[current],images_right[current],
+                        name_left[current],name_right[current],lyric_left[current],lyric_right[current],
+                        number[current],background_color[current]);
+        }
+        if(e.key == "ArrowUp"){
+            if(current > 0){
+                current --;
+            }
+            changePage(musics_left[current],musics_right[current],images_left[current],images_right[current],
+                        name_left[current],name_right[current],lyric_left[current],lyric_right[current],
+                        number[current],background_color[current]);
+        }
+    }        
+
+    function control(lr){
+        var controlL = document.getElementById("controlL");
+        var controlR = document.getElementById("controlR");
+        var musicL = document.getElementById("musicL");
+        var musicR = document.getElementById("musicR");
+        if(lr == 'L'){
+            if(musicL.paused){
+                musicL.play();
+                musicR.pause();
+                controlL.src = "./image/pause.png";
+                controlR.src = "./image/play.png";
+            }else{
+                musicL.pause();
+                controlL.src = "./image/play.png";
+            }
+        }
+        if(lr == 'R'){
+            if(musicR.paused){
+                musicR.play();
+                musicL.pause();
+                controlR.src = "./image/pause.png";
+                controlL.src = "./image/play.png";
+            }else{
+                musicR.pause();
+                controlR.src = "./image/play.png";
+            }
+        }
+        if(lr == 'M'){
+            var music = document.getElementById("music");
+            var control = document.getElementById("control");
+            if(music.paused){
+                music.play();
+                control.src = "./image/pause.png";
+            }else{
+                music.pause();
+                control.src = "./image/play.png";
+            }
+        }
+    }
+
+    function circle(id, num){
+        var i = document.getElementById(id);
+        var top = (10 + num * 3) * 0.01
+        i.style.top = (top - 0.005) * document.body.clientWidth + "px";
+        current = num;
+        changePage(musics_left[current],musics_right[current],images_left[current],images_right[current],
+                        name_left[current],name_right[current],lyric_left[current],lyric_right[current],
+                        number[current],background_color[current]);
+    }
+    function textshow(){
+        var text = document.getElementById("suqtext");
+        text.style.display = "block";
+    }
+    function texthide(){
+        var text = document.getElementById("suqtext");
+        text.style.display = "none";
+    }
+    function square(){
+        var bg = document.getElementById("bg");
+        bg.style.display="none";
+        var bg2 = document.getElementById("bg2");
+        bg2.style.display="block";
+        var music = document.getElementById("music");
+        music.play();
+        var musicL = document.getElementById("musicL");
+        musicL.pause();
+        var musicR = document.getElementById("musicR");
+        musicR.pause();
+    }
+</script>
+<body style="margin: 0; padding: 0;">
+    <div style="width: 100vw; height: 75vh; background-color:#4a47a3;padding-top: 25vh;" id="bg">
+        <div class="circle" style="background-color: #4a47a3;top: 10vw;" onmouseover="circle('circle1',0)" id="circle1"></div>
+        <div class="circle" style="background-color: #ff9595;top: 13vw;" onmouseover="circle('circle2',1)" id="circle2"></div>
+        <div class="circle" style="background-color: #158467;top: 16vw;" onmouseover="circle('circle3',2)" id="circle3"></div>
+        <div class="circle" style="background-color: #145374;top: 19vw;" onmouseover="circle('circle4',3)" id="circle4"></div>
+        <div class="circle" style="background-color: #ee6f57;top: 22vw;" onmouseover="circle('circle5',4)" id="circle5"></div>
+        <div class="circle" style="background-color: #008891;top: 25vw;" onmouseover="circle('circle6',5)" id="circle6"></div>
+        <div class="circle" style="background-color: #394867;top: 28vw;" onmouseover="circle('circle7',6)" id="circle7"></div>
+        <div class="circle" style="background-color: #393e46;top: 31vw;" onmouseover="circle('circle8',7)" id="circle8"></div>
+        <div class="circle" style="background-color: #f69e7b;top: 34vw;" onmouseover="circle('circle9',8)" id="circle9"></div>
+        <div class="circle" style="background-color: #197163;top: 37vw;" onmouseover="circle('circle10',9)" id="circle10"></div>
+        <div class="circle" style="background-color: #709fb0;top: 40vw;" onmouseover="circle('circle11',10)" id="circle11"></div>
+        <div class="circle" style="background-color: #48426d;top: 43vw;" onmouseover="circle('circle12',11)" id="circle12"></div>
+        <div class="square" style="background-color: #06623b;top: 46vw;" onmouseover="textshow()" onmouseout="texthide()" onclick="square()">
+            <div class="square-text" id="suqtext">click to next page</div>
+        </div>
+        <div>
+            <img src="./image/1.png" class="number" id="number">
+        </div>
+        <table>
+            <tr>
+                <td>
+                    <div class="audio-left">
+                        <img src="./image/聊.JPG" class="img" id="imageL">
+                        <div style="padding-left: 1vw;" id="nameL">聊</div>
+                        <img src="./image/play.png" class="img-control" id="controlL" onclick="control('L')">
+                        <audio src="./music/聊.mp3" id="musicL" loop="true">
+                        </audio>
+                    </div>
+                </td>
+                <td>
+                    <div class="audio-right">
+                        <img src="./image/美丽之最.JPG" class="img" id="imageR">
+                        <div style="padding-left: 1vw;" id="nameR">美丽之最</div>
+                        <img src="./image/play.png" class="img-control" id="controlR" onclick="control('R')">
+                        <audio src="./music/美丽之最.mp3" id="musicR" loop="true">
+                        </audio>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <div class="text-left" id="lyricL">
+            我给你流泪笑脸<br/>
+            我给你老歌词<br/>
+            我给你全部汉字<br/>
+            都怕少<br/>
+            我跟你聊着世事<br/>
+            我跟你聊心事<br/>
+            我跟你聊动<br/>
+            宇宙聊动你<br/>
+        </div>
+        <div class="text-right" id="lyricR">
+            想一生看下去<br/>
+            还会等一天八十岁<br/>
+            看你发端灰色的点缀<br/>
+            未来只有乐趣<br/>
+            和你去拖手看新居<br/>
+            双眼开始像饮醉<br/>
+            尤如观星你在这里<br/>
+            我的双眼里<br/>
+            寻找到宇宙之最<br/>
+        </div>
+    </div>
+    <div style="width: 100vw; height: 75vh; background-color:#06623b;padding-top: 25vh;display: none;" id="bg2">
+        <div class="audio">
+            <img src="./image/东京人寿.jpg" class="img">
+            <div style="padding-left: 1vw;">东京人寿</div>
+            <img src="./image/pause.png" class="img-control" id="control" onclick="control('M')">
+            <audio src="./music/东京人寿.mp3" id="music" loop="true">
+            </audio>
+        </div>
+        <div class="text-l">
+            明年保了寿命 谁说一定<br/>
+            有伴侣与东京<br/>
+            明年即使有热血 初樱初雪<br/>
+            又如何约定<br/>
+        </div>
+        <div class="text-r">
+            趁一切 都正好<br/>
+            撮合无尽 的偶然来尽兴<br/>
+            随意浪费着美景 才是对它不敬<br/>
+        </div>
+        <br/><br/>
+        <hr/>
+        <div class="text">同我拍拖?</div>
+        <div class="button" onclick="yes()">YES</div>
+        <div class="mask" id="mask" style="display: none;"></div>
+        <img class="hidden-img" src="./image/YES.JPG" id="hidimg" style="display: none;"/>
+        <img class="close" src="./image/close.png" id="close" style="display: none;" onclick="cls()"/>
+        <div class="button" style="background-color: gainsboro;" onmousemove="no()" onmouseout="never()" id="no">NO</div>
+    </div>
+    <div style="width: 100vw; height: 85vh; background-color:#e9896a;padding-top: 15vh;display: none;" id="bg3">
+        <div class="say-text">SAY SOMETHING...</div>
+        <input class="subject" type="text" placeholder="主题" id="subject"><br/>
+        <textarea class="content" placeholder="内容" id="content"></textarea>
+        <div class="send" onclick="send()">发送邮件</div>
+    </div>
+    <script>
+        function yes(){
+            var mask = document.getElementById("mask");
+            mask.style.display = "block";
+            var img = document.getElementById("hidimg");
+            img.style.display = "block";
+            var close = document.getElementById("close");
+            close.style.display = "block";
+        }
+        function cls(){                                 
+            var mask = document.getElementById("mask");
+            mask.style.display = "none";
+            var img = document.getElementById("hidimg");
+            img.style.display = "none";
+            var close = document.getElementById("close");
+            close.style.display = "none";
+            var bg2 = document.getElementById("bg2");
+            var bg3 = document.getElementById("bg3");
+            bg2.style.display = "none";
+            bg3.style.display = "block";
+        }
+        function send(){
+            var subject = document.getElementById("subject");
+            var content = document.getElementById("content");
+            var sub = subject.value;
+            var body = content.value;
+            parent.location.href='mailto:874402665s@sina.com?subject='+sub+'&body='+body;
+        }
+        function no(){
+            var no = document.getElementById("no");
+            no.innerHTML="Never!";
+        }
+        function never(){
+            var no = document.getElementById("no");
+            no.innerHTML="No";
+        }
+    </script>
+</body>
+</html>
